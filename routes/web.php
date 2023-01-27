@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,11 @@ Route::get('/categories', function () {
 Route::get('/mobiles/iphone_x_64', function () {
 	return view('product');
 });
+
+Route::get('/', [MainController::class, 'index']);
+
+Route::get('/categories', [MainController::class, 'categories']);
+
+Route::get('/{category}', [MainController::class, 'category']);
+
+Route::get('/mobiles/{product?}', [MainController::class, 'product']);
