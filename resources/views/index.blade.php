@@ -4,7 +4,7 @@
     </x-slot>
     <div class="starter-template">
         <h1>Все товары</h1>
-        <form method="GET" action="http://internet-shop.tmweb.ru">
+        <form method="GET" action="{{ route('index') }}">
             <div class="filters row">
                 <div class="col-sm-6 col-md-3">
                     <label for="price_from">Цена от <input type="text" name="price_from" id="price_from" size="6"
@@ -36,124 +36,15 @@
             </div>
         </form>
         <div class="row">
-            <x-card>
-
-            </x-card>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="labels">
-
-                    </div>
-                    <img src="http://internet-shop.tmweb.ru/storage/products/iphone_x_silver.jpg" alt="iPhone X 256GB">
-                    <div class="caption">
-                        <h3>iPhone X 256GB</h3>
-                        <p>89990 ₽</p>
-                        <p>
-                        </p>
-                        <form action="http://internet-shop.tmweb.ru/basket/add/2" method="POST">
-                            <button type="submit" class="btn btn-primary" role="button">В корзину</button>
-                            <a href="http://internet-shop.tmweb.ru/mobiles/iphone_x_256" class="btn btn-default"
-                                role="button">Подробнее</a>
-                            <input type="hidden" name="_token" value="KvvIxJkz52hiOIlBIk42d6DOofnlxp5HfVpwT8zO">
-                        </form>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="labels">
-
-                    </div>
-                    <img src="http://internet-shop.tmweb.ru/storage/products/htc_one_s.png" alt="HTC One S">
-                    <div class="caption">
-                        <h3>HTC One S</h3>
-                        <p>12490 ₽</p>
-                        <p>
-                        </p>
-                        <form action="http://internet-shop.tmweb.ru/basket/add/3" method="POST">
-                            Не доступен <a href="http://internet-shop.tmweb.ru/mobiles/htc_one_s"
-                                class="btn btn-default" role="button">Подробнее</a>
-                            <input type="hidden" name="_token" value="KvvIxJkz52hiOIlBIk42d6DOofnlxp5HfVpwT8zO">
-                        </form>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="labels">
-
-                    </div>
-                    <img src="http://internet-shop.tmweb.ru/storage/products/iphone_5.jpg" alt="iPhone 5SE">
-                    <div class="caption">
-                        <h3>iPhone 5SE</h3>
-                        <p>17221 ₽</p>
-                        <p>
-                        </p>
-                        <form action="http://internet-shop.tmweb.ru/basket/add/4" method="POST">
-                            <button type="submit" class="btn btn-primary" role="button">В корзину</button>
-                            <a href="http://internet-shop.tmweb.ru/mobiles/iphone_5se" class="btn btn-default"
-                                role="button">Подробнее</a>
-                            <input type="hidden" name="_token" value="KvvIxJkz52hiOIlBIk42d6DOofnlxp5HfVpwT8zO">
-                        </form>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="labels">
-
-                    </div>
-                    <img src="http://internet-shop.tmweb.ru/storage/products/beats.jpg" alt="Наушники Beats Audio">
-                    <div class="caption">
-                        <h3>Наушники Beats Audio</h3>
-                        <p>20221 ₽</p>
-                        <p>
-                        </p>
-                        <form action="http://internet-shop.tmweb.ru/basket/add/5" method="POST">
-                            <button type="submit" class="btn btn-primary" role="button">В корзину</button>
-                            <a href="http://internet-shop.tmweb.ru/portable/beats_audio" class="btn btn-default"
-                                role="button">Подробнее</a>
-                            <input type="hidden" name="_token" value="KvvIxJkz52hiOIlBIk42d6DOofnlxp5HfVpwT8zO">
-                        </form>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="labels">
-
-                    </div>
-                    <img src="http://internet-shop.tmweb.ru/storage/products/gopro.jpg" alt="Камера GoPro">
-                    <div class="caption">
-                        <h3>Камера GoPro</h3>
-                        <p>12000 ₽</p>
-                        <p>
-                        </p>
-                        <form action="http://internet-shop.tmweb.ru/basket/add/6" method="POST">
-                            <button type="submit" class="btn btn-primary" role="button">В корзину</button>
-                            <a href="http://internet-shop.tmweb.ru/portable/gopro" class="btn btn-default"
-                                role="button">Подробнее</a>
-                            <input type="hidden" name="_token" value="KvvIxJkz52hiOIlBIk42d6DOofnlxp5HfVpwT8zO">
-                        </form>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
+            @foreach ($products as $product)
+                @include('components.card', compact('product'))
+            @endforeach
         </div>
         <nav>
             <ul class="pagination">
-
                 <li class="page-item disabled" aria-disabled="true" aria-label="pagination.previous">
                     <span class="page-link" aria-hidden="true">‹</span>
                 </li>
-
-
-
-
                 <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
                 <li class="page-item"><a class="page-link" href="?&amp;page=2">2</a></li>
 
@@ -162,6 +53,5 @@
                 </li>
             </ul>
         </nav>
-
     </div>
 </x-layout>
