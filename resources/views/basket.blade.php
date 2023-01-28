@@ -26,7 +26,7 @@
                                 </a>
                             </td>
                             <td><span class="badge">{{ $product->pivot->count }}</span>
-                                <div class="btn-group">
+                                <div class="btn-group form-inline">
                                     <form action="{{ route('basket-add', $product) }}" metod="POST">
                                         <button type="submit" class="btn btn-success"><span
                                                 class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>

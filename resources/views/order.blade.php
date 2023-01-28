@@ -6,7 +6,7 @@
         <h1>Подтвердите заказ:</h1>
         <div class="container">
             <div class="row justify-content-center">
-                <p>Общая стоимость заказа: <b>71990 руб.</b></p>
+                <p>Общая стоимость заказа: <b>{{ $order->getFullPrice() }} руб.</b></p>
                 <form action="http://laravel-diplom-1.rdavydov.ru/basket/accept" method="POST">
                     <div>
                         <p>Укажите свои имя и номер телефона, чтобы наш менеджер мог с вами
