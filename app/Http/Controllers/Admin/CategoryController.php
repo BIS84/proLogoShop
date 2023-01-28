@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -36,11 +37,16 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
 	{
-		$path = $request->file('image')->store('categories'); // Получаем путь к файлу, который был создан. 'image' - название поля (поля ввода), 'categories' - папка, в которую сохраняем.
-		$params = $request->all(); // Берем все параметры, которые получили
-		$params['image'] = $path; // В БД в таблице categories в поле images сохраняется путь к файлу. Сам файл в storage\app\categories. Папка categories создается автоматически (в структуре проекта)
+		$params = $request->all();
+		unset($params['image']);
+
+		if ($request->has('image')) {
+		$path = $request->file('image')->store('categories');
+		}
+
+		$params['image'] = $path;
 		Category::create($params);
 		return to_route('categories.index');
 	}
@@ -74,16 +80,18 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
 	{
-		if($category->image) {
-            Storage::delete($category->image); // Удаляем старую картинку
-        }
-		$path = $request->file('image')->store('categories');
 		$params = $request->all();
-		$params['image'] = $path;
-		$category->update($params);
-		return to_route('categories.index');
+		unset($params['image']);
+
+		if ($request->has('image')) {
+		Storage::delete($category->image);
+		$params['image'] = $request->file('image')->store('categories');
+	}
+
+	$category->update($params);
+	return to_route('categories.index');
 	}
 
     /**
