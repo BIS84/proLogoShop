@@ -8,11 +8,12 @@
             <p>{{ $product->price }} ₽</p>
             <br>
             <p>Категория: {{ $product->category->name }}</p>
-            <form action="http://internet-shop.tmweb.ru/basket/add/1" method="POST">
+            <form action="{{ route('basket-add', $product) }}" method="POST">
                 <button type="submit" class="btn btn-primary" role="button">В корзину</button>
                 <a href="{{ route('product', [$product->category->code, $product->code]) }}" class="btn btn-default"
                     role="button">Подробнее</a>
-                <input type="hidden" name="_token" value="KvvIxJkz52hiOIlBIk42d6DOofnlxp5HfVpwT8zO">
+                <input type="hidden" name="_token">
+                @csrf
             </form>
             <p></p>
         </div>
