@@ -50,6 +50,8 @@ Route::get('/basket/place', [BasketController::class, 'basketPlace'])->name('bas
 
 Route::match(['get', 'post'], 'basket/add/{id}', [BasketController::class, 'basketAdd'])->name('basket-add');
 
+Route::match(['get', 'post'], 'basket/remove/{id}', [BasketController::class, 'basketRemove'])->name('basket-remove');
+
 Route::get('/categories', [MainController::class, 'categories'])->name('categories');
 
 Route::get('/{category}', [MainController::class, 'category'])->name('category');
