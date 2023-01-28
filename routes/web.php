@@ -48,6 +48,8 @@ Route::get('/basket', [BasketController::class, 'basket'])->name('basket');
 
 Route::get('/basket/place', [BasketController::class, 'basketPlace'])->name('basket-place');
 
+Route::post('/basket/place', [BasketController::class, 'basketConfirm'])->name('basket-confirm');
+
 Route::match(['get', 'post'], 'basket/add/{id}', [BasketController::class, 'basketAdd'])->name('basket-add');
 
 Route::match(['get', 'post'], 'basket/remove/{id}', [BasketController::class, 'basketRemove'])->name('basket-remove');

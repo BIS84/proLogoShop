@@ -63,7 +63,9 @@
     </nav>
 
     <div class="container">
-        {{ $slot }}
+        <div class="starter-template">
+            {{ $slot }}
+        </div>
     </div>
 </body>
 
