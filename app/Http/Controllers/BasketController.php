@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
@@ -48,6 +49,11 @@ class BasketController extends Controller
             $pivotRow->update(); // Обновляем поля
         } else {
             $order->products()->attach($productId); // Если товара еще не было в корзине, добавляем
+        }
+
+        if (Auth::check()) { // Если авторизован
+            $order->user_id = Auth::id(); // В заказе указываем id пользователя
+            $order->save();
         }
 
         $product = Product::find($productId);

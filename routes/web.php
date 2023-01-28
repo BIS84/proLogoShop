@@ -30,7 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/order', [OrderController::class, 'index'])->name('home');
+
+    Route::middleware('is_admin')->namespace('Admin')->group(function () {
+		Route::get('/orders', [OrderController::class, 'index'])->name('home');
+	});
 });
 
 require __DIR__.'/auth.php';
@@ -49,15 +52,22 @@ Route::get('/mobiles/iphone_x_64', function () {
 
 Route::get('/', [MainController::class, 'index'])->name('index');
 
-Route::get('/basket', [BasketController::class, 'basket'])->name('basket');
+Route::prefix('basket')->group(function() {
 
-Route::get('/basket/place', [BasketController::class, 'basketPlace'])->name('basket-place');
+	Route::match(['get', 'post'], '/add/{id}', [BasketController::class, 'basketAdd'])->name('basket-add');
 
-Route::post('/basket/place', [BasketController::class, 'basketConfirm'])->name('basket-confirm');
+	Route::middleware('basket_not_empty')->group(function () {
+		Route::get('/', [BasketController::class, 'basket'])->name('basket');
 
-Route::match(['get', 'post'], 'basket/add/{id}', [BasketController::class, 'basketAdd'])->name('basket-add');
+		Route::get('/place', [BasketController::class, 'basketPlace'])->name('basket-place');
 
-Route::match(['get', 'post'], 'basket/remove/{id}', [BasketController::class, 'basketRemove'])->name('basket-remove');
+		Route::post('/place', [BasketController::class, 'basketConfirm'])->name('basket-confirm');
+	});
+
+	Route::match(['get', 'post'], '/remove/{id}', [BasketController::class, 'basketRemove'])->name('basket-remove');
+
+
+});
 
 Route::get('/categories', [MainController::class, 'categories'])->name('categories');
 
