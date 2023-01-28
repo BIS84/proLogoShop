@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
 
 class BasketController extends Controller
 {
@@ -49,6 +50,9 @@ class BasketController extends Controller
             $order->products()->attach($productId); // Если товара еще не было в корзине, добавляем
         }
 
+        $product = Product::find($productId);
+	session()->flash('success', 'Добавлен товар '.$product->name);
+
         return to_route('basket');
     }
 
@@ -77,19 +81,28 @@ class BasketController extends Controller
 
         }
 
+        $product = Product::find($productId);
+	session()->flash('warning', 'Удален товар '.$product->name);
+
 		return to_route('basket');
 	}
 
     public function basketConfirm(Request $request)
 	{
         $orderId = session('orderId');
-	    if (is_null($orderId)) {
+        if (is_null($orderId)) {
 		    return to_route('index'); // Если заказа нет, переходим на главную
-	    }
+        }
 
-	    $order = Order::find($orderId);
-	    $success = $order->saveOrder($request->name, $request->phone);
+        $order = Order::find($orderId);
+        $success = $order->saveOrder($request->name, $request->phone);
 
-	    return to_route('index');
+        if ($success) {
+            session()->flash('success', 'Ваш заказ принят в обработку!'); // Во flash передаем ключ и сообщение.
+        } else {
+            session()->flash('warning', 'Произошла ошибка');
+        }
+
+        return to_route('index');
 	}
 }
