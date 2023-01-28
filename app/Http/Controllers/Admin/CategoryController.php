@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -36,10 +37,13 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        Category::create($request->all());
-        return redirect()->route('categories.index');
-    }
+	{
+		$path = $request->file('image')->store('categories'); // Получаем путь к файлу, который был создан. 'image' - название поля (поля ввода), 'categories' - папка, в которую сохраняем.
+		$params = $request->all(); // Берем все параметры, которые получили
+		$params['image'] = $path; // В БД в таблице categories в поле images сохраняется путь к файлу. Сам файл в storage\app\categories. Папка categories создается автоматически (в структуре проекта)
+		Category::create($params);
+		return to_route('categories.index');
+	}
 
     /**
      * Display the specified resource.
@@ -71,10 +75,16 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Category $category)
-    {
-        $category->update($request->all());
+	{
+		if($category->image) {
+            Storage::delete($category->image); // Удаляем старую картинку
+        }
+		$path = $request->file('image')->store('categories');
+		$params = $request->all();
+		$params['image'] = $path;
+		$category->update($params);
 		return to_route('categories.index');
-    }
+	}
 
     /**
      * Remove the specified resource from storage.
@@ -84,6 +94,9 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if($category->image) {
+			Storage::delete($category->image); // Удаляем старую картинку
+		}
         $category->delete();
         return to_route('categories.index');
     }

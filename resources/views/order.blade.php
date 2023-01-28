@@ -8,8 +8,7 @@
             <p>Общая стоимость заказа: <b>{{ $order->getFullPrice() }} руб.</b></p>
             <form action="{{ route('basket-confirm') }}" method="POST">
                 <div>
-                    <p>Укажите свои имя и номер телефона, чтобы наш менеджер мог с вами
-                        связаться:</p>
+                    <p>Укажите свои имя и номер телефона, чтобы наш менеджер мог с вами связаться:</p>
 
                     <div class="container">
                         <div class="form-group">

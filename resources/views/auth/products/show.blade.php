@@ -34,7 +34,7 @@
                 </tr>
                 <tr>
                     <td>Картинка</td>
-                    <td><img src="http://laravel-diplom-1.rdavydov.ru/storage/products/bosch.jpg" height="240px"></td>
+                    <td><img src="{{ Storage::url($product->image) }}" alt="{{ Storage::url($product->name) }}" height="240px"></td>
                 </tr>
                 <tr>
                     <td>Категория</td>
