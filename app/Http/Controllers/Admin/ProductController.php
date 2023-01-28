@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -38,10 +39,13 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        Product::create($request->all());
-	return redirect()->route('products.index');
-    }
+	{
+		$path = $request->file('image')->store('products');
+		$params = $request->all();
+		$params['image'] = $path;
+		Product::create($params);
+		return to_route('products.index');
+	}
 
     /**
      * Display the specified resource.
@@ -74,10 +78,17 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product)
-    {
-        $product->update($request->all());
-	return to_route('products.index');
-    }
+	{
+		if ($product->image) {
+			Storage::delete($product->image);
+		}
+		Storage::delete($product->image);
+		$path = $request->file('image')->store('products');
+		$params = $request->all();
+		$params['image'] = $path;
+		$product->update($params);
+		return to_route('products.index');
+	}
 
     /**
      * Remove the specified resource from storage.
@@ -86,8 +97,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)
-    {
-        $product->delete();
-        return to_route('products.index');
-    }
+	{
+		if ($product->image) {
+		Storage::delete($product->image);
+        }
+		$product->delete();
+		return to_route('products.index');
+	}
 }
