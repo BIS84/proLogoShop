@@ -34,7 +34,7 @@
                 </tr>
                 <tr>
                     <td>Картинка</td>
-                    <td><img src="{{ Storage::url($category->image) }}" height="240px">
+                    <td><img src="{{ Storage::url($category->image) }}" alt="{{ Storage::url($category->name) }}" height="240px">
                     </td>
                 </tr>
                 <tr>
