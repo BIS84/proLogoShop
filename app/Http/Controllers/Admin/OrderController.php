@@ -13,4 +13,9 @@ class OrderController extends Controller
         $orders = Order::where('status', 1)->get();
 		return view('auth.orders.index', ['orders' => $orders]);
     }
+
+    public function show(Order $order)
+	{
+		return view('auth.orders.show', ['order' => $order]);
+	}
 }

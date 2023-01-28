@@ -1,4 +1,4 @@
-<x-layout>
+<x-master>
 
     <x-slot name='title'>
         Товары
@@ -54,4 +54,4 @@
         </table>
         <a class="btn btn-success" type="button" href="{{ route('products.create') }}">Добавить товар</a>
     </div>
-</x-layout>
+</x-master>

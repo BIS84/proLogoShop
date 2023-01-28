@@ -1,4 +1,4 @@
-<x-layout>
+<x-master>
 
     @isset($category)
         <x-slot name='title'>
@@ -71,4 +71,4 @@
         </form>
 
     </div>
-</x-layout>
+</x-master>

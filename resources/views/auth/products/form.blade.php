@@ -1,4 +1,4 @@
-<x-layout>
+<x-master>
 
     @isset($product)
         <x-slot name='title'>
@@ -98,4 +98,4 @@
             </div>
         </form>
     </div>
-</x-layout>
+</x-master>

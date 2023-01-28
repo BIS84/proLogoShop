@@ -1,4 +1,4 @@
-<x-layout>
+<x-master>
 
     <x-slot name='title'>
         Категория {{ $category->name }}
@@ -44,4 +44,4 @@
             </tbody>
         </table>
     </div>
-</x-layout>
+</x-master>

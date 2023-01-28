@@ -7,6 +7,7 @@ use App\Http\Controllers\BasketController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Person\OrderController as PersonOrderController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
@@ -33,9 +34,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::prefix('person')->namespace('Person')->group(function () {
+		Route::get('/orders', [PersonOrderController::class, 'index'])->name('orders.index');
+		Route::get('/orders/{order}', [PersonOrderController::class, 'show'])->name('person.order.show');
+	});
+
     Route::prefix('admin')->group(function () {
 		Route::middleware('is_admin')->namespace('Admin')->group(function () {
 			Route::get('/orders', [OrderController::class, 'index'])->name('home');
+            Route::get('/orders/{order}', [OrderController::class, 'show'])->name('order.show');
         });
 		Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);

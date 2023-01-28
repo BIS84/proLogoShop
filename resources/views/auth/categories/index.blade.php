@@ -1,4 +1,4 @@
-<x-layout>
+<x-master>
     <x-slot name="title">
         Категории
     </x-slot>
@@ -44,4 +44,4 @@
         </table>
         <a class="btn btn-success" type="button" href="{{ route('categories.create') }}">Добавить категорию</a>
     </div>
-</x-layout>
+</x-master>
