@@ -57,7 +57,7 @@ class BasketController extends Controller
         }
 
         $product = Product::find($productId);
-	session()->flash('success', 'Добавлен товар '.$product->name);
+        session()->flash('success', 'Добавлен товар '.$product->name);
 
         return to_route('basket');
     }
@@ -65,7 +65,6 @@ class BasketController extends Controller
     public function basketRemove($productId)
 	{
 		$orderId = session('orderId');
-		$order = Order::find($orderId);
 
 		if(is_null($orderId)) {
 			return to_route('basket');
@@ -88,7 +87,7 @@ class BasketController extends Controller
         }
 
         $product = Product::find($productId);
-	session()->flash('warning', 'Удален товар '.$product->name);
+        session()->flash('warning', 'Удален товар '.$product->name);
 
 		return to_route('basket');
 	}

@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index()
 	{
-		$orders =Auth::user()->orders()->where('status', 1)->get();
+		$orders =Auth::user()->orders->where('status', 1)->get();
 		return view('auth.orders.index', ['orders' => $orders]);
 	}
 
@@ -19,8 +19,8 @@ class OrderController extends Controller
 	{
 		$order =Order::where('id', $id)->first();
 		if(!Auth::user()->orders->contains($order)) {
-			return back();
+            return back();
 		}
-		return view('auth.orders.show', ['order' => $order]);
+        return view('auth.orders.show', ['order' => $order]);
 	}
 }

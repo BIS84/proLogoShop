@@ -92,6 +92,12 @@ class ProductController extends Controller
 			$params['image'] = $path;
 		}
 
+        foreach (['new', 'hit', 'recommend'] as $fieldName) {
+			if (!isset($params[$fieldName])) { // Если параметр не существует, передаем 0
+				$params[$fieldName] = 0;
+			}
+		}
+
 		$product->update($params);
 		return to_route('products.index');
 	}
