@@ -55,10 +55,6 @@ require __DIR__.'/auth.php';
 
 Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('get-logout');
 
-Route::get('/categories', function () {
-	return view('categories');
-});
-
 Route::get('/mobiles/iphone_x_64', function () {
 	return view('product');
 });
@@ -87,3 +83,5 @@ Route::get('/categories', [MainController::class, 'categories'])->name('categori
 Route::get('/{category}', [MainController::class, 'category'])->name('category');
 
 Route::get('/mobiles/{product?}', [MainController::class, 'product'])->name('product');
+
+Route::get('/reset', [ResetController::class, 'reset'])->name('reset');
