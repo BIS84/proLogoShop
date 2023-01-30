@@ -6,12 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\ProductsFilterRequest;
+use DebugBar\Debugbar;
 
 class MainController extends Controller
 {
     public function index(ProductsFilterRequest $request)
 	{
-		$productsQuery = Product::query(); // Вызываем метод query
+        \Debugbar::info('my info');
+
+		$productsQuery = Product::with('category');
 
 		if ($request->filled('price_from')) {
 			$productsQuery->where('price', '>=', $request->price_from); // теперь можно использовать where
@@ -23,7 +26,7 @@ class MainController extends Controller
 
 		foreach (['hit', 'new', 'recommend'] as $field) {
 			if ($request->has($field)) {
-				$productsQuery->where($field, 1); // Где такое поле существует
+				$productsQuery->$field();
 			}
 		}
 

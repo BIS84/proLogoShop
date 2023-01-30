@@ -13,7 +13,7 @@ class Order extends Model
 		return $this->belongsToMany(Product::class)->withPivot('count')->withTimestamps();
 	}
 
-    public function getFullPrice()
+    public function calculateFullSum()
 	{
 		$sum = 0;
 		foreach ($this->products as $product) {
@@ -21,6 +21,23 @@ class Order extends Model
 		}
 
 		return $sum;
+	}
+
+    public static function eraseOrderSum()
+	{
+		session()->forget('full_order_sum'); // forget - забыть эту переменную, т.е удалить ее из сессии
+	}
+
+	public static function changeFullSum($changeSum)
+	{
+
+		$sum = self::getFullSum() + $changeSum;
+		session(['full_order_sum' => $sum]);
+	}
+
+    public static function getFullSum()
+	{
+		return session('full_order_sum', 0); // Получаем цену заказа из сессии
 	}
 
     public function saveOrder($name, $phone) // С реквестом здесь не можем работать. Поэтому передаем сюда переменные.
@@ -35,5 +52,10 @@ class Order extends Model
 		} else {
 			return false;
 		}
+	}
+
+    public function scopeActive($query)
+	{
+		return $query->where('status', 1);
 	}
 }

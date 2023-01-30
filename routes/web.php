@@ -71,9 +71,11 @@ Route::prefix('basket')->group(function() {
 		Route::get('/place', [BasketController::class, 'basketPlace'])->name('basket-place');
 
 		Route::post('/place', [BasketController::class, 'basketConfirm'])->name('basket-confirm');
+
+        Route::match(['get', 'post'], '/remove/{id}', [BasketController::class, 'basketRemove'])->name('basket-remove');
 	});
 
-	Route::match(['get', 'post'], '/remove/{id}', [BasketController::class, 'basketRemove'])->name('basket-remove');
+
 
 
 });

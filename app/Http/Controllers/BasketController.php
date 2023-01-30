@@ -57,6 +57,9 @@ class BasketController extends Controller
         }
 
         $product = Product::find($productId);
+
+        Order::changeFullSum($product->price);
+
         session()->flash('success', 'Добавлен товар '.$product->name);
 
         return to_route('basket');
@@ -67,7 +70,7 @@ class BasketController extends Controller
 		$orderId = session('orderId');
 
 		if(is_null($orderId)) {
-			return to_route('basket');
+			return to_route('index');
 		}
 
         $order = Order::find($orderId);
@@ -81,12 +84,15 @@ class BasketController extends Controller
                 $order->products()->detach($productId); // Если такой товар в корзине один, удаляем его
             } else {
                 $pivotRow->count--; // Уменьшаем счетчик
-                $pivotRow->update(); // Обновляем поля
-            }
 
+            }
+            $pivotRow->update(); // Обновляем поля
         }
 
         $product = Product::find($productId);
+
+        Order::changeFullSum(-$product->price);
+
         session()->flash('warning', 'Удален товар '.$product->name);
 
 		return to_route('basket');
@@ -107,6 +113,8 @@ class BasketController extends Controller
         } else {
             session()->flash('warning', 'Произошла ошибка');
         }
+
+        Order::eraseOrderSum();
 
         return to_route('index');
 	}
