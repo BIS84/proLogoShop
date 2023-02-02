@@ -87,7 +87,8 @@ class CategoryController extends Controller
 
 		if ($request->has('image')) {
 		Storage::delete($category->image);
-		$params['image'] = $request->file('image')->store('categories');
+        $path = $request->file('image')->store('categories');
+		$params['image'] = $path;
 	}
 
 	$category->update($params);
