@@ -44,7 +44,7 @@ class ProductController extends Controller
 		$params = $request->all();
 		unset($params['image']);
 		if ($request->has('image')) {
-			$path = $request->file('image')->store('products');
+			$path = $request->file('image')->store('public/products');
 			$params['image'] = $path;
         }
 
@@ -88,7 +88,7 @@ class ProductController extends Controller
 		unset($params['image']);
 		if ($request->has('image')) {
 			Storage::delete($product->image);
-			$path = $request->file('image')->store('products');
+			$path = $request->file('image')->store('public/products');
 			$params['image'] = $path;
 		}
 
