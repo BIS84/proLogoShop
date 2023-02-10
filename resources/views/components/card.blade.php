@@ -22,10 +22,13 @@
             <br>
             <p>Категория: {{ $product->category->name }}</p>
             <form action="{{ route('basket-add', $product) }}" method="POST">
+                @if($product->isAvailable())
                 <button type="submit" class="btn btn-primary" role="button">В корзину</button>
+                @else
+                <button type="submit" class="btn btn-primary" role="button">Заказать</button>
+                @endif
                 <a href="{{ route('product', [$product->category->code, $product->code]) }}" class="btn btn-default"
                     role="button">Подробнее</a>
-                <input type="hidden" name="_token">
                 @csrf
             </form>
             <p></p>

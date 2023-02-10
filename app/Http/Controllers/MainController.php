@@ -46,8 +46,10 @@ class MainController extends Controller
         return view('category', ['category' => $category]);
     }
 
-    public function product($product = null)
+    public function product($category, $productCode)
     {
-        return view('product');
+        $product = Product::withTrashed()->byCode($productCode)->first();
+
+        return view('product', ['product' => $product]);
     }
 }

@@ -92,7 +92,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'name' => 'Блендер Moulinex',
                 'code' => 'moulinex',
-                'description' => 'Для свмых смелых людей',
+                'description' => 'Для самых смелых людей',
                 'image' => '',
                 'price' => 4200,
             ],

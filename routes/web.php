@@ -84,6 +84,6 @@ Route::get('/categories', [MainController::class, 'categories'])->name('categori
 
 Route::get('/{category}', [MainController::class, 'category'])->name('category');
 
-Route::get('/mobiles/{product?}', [MainController::class, 'product'])->name('product');
+Route::get('/{category}/{product?}', [MainController::class, 'product'])->name('product');
 
 Route::get('/reset', [ResetController::class, 'reset'])->name('reset');
