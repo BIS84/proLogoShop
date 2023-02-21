@@ -15,7 +15,7 @@
         </div>
         <div class="labels">
         </div>
-        <img src="{{ Storage::url($product->image) }}" alt="{{ Storage::url($product->name) }}" height="240px">
+        <img src="{{ Storage::url($product->image) }}" alt="Изображение {{ $product->name }}" height="240px">
         <div class="caption">
             <h3>{{ $product->name }}</h3>
             <p>{{ $product->price }} ₽</p>

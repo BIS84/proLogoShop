@@ -31,6 +31,7 @@ class MainController extends Controller
 		}
 
 		$products = $productsQuery->paginate(6)->withPath("?" . $request->getQueryString());
+        
 		return view('index', ['products' => $products]);
 	}
 

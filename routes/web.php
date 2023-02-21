@@ -63,7 +63,7 @@ Route::get('/', [MainController::class, 'index'])->name('index');
 
 Route::prefix('basket')->group(function() {
 
-	Route::match(['get', 'post'], '/add/{id}', [BasketController::class, 'basketAdd'])->name('basket-add');
+	Route::match(['get', 'post'], '/add/{product}', [BasketController::class, 'basketAdd'])->name('basket-add');
 
 	Route::middleware('basket_not_empty')->group(function () {
 		Route::get('/', [BasketController::class, 'basket'])->name('basket');
@@ -72,7 +72,7 @@ Route::prefix('basket')->group(function() {
 
 		Route::post('/place', [BasketController::class, 'basketConfirm'])->name('basket-confirm');
 
-        Route::match(['get', 'post'], '/remove/{id}', [BasketController::class, 'basketRemove'])->name('basket-remove');
+        Route::match(['get', 'post'], '/remove/{product}', [BasketController::class, 'basketRemove'])->name('basket-remove');
 	});
 
 
